@@ -20,6 +20,8 @@ import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { ChatRoom } from './entities/chat-room.entity';
 import { PaginatedResponseDto } from 'src/common/dto/paginatedResponse.dto';
 import { SearchRoomDto } from './dto/search-room.dto';
+import { Serialize } from 'src/common/decorators/serialize.decorator';
+import { ResponseMessageDto } from './dto/Response.dto';
 
 @ApiTags('chat')
 @ApiSecurity('bearer')
@@ -48,6 +50,7 @@ export class ChatController {
 
   // Get Chat Room Messages (Paginated)
   @Get('rooms/:roomId/messages')
+  @Serialize(ResponseMessageDto)
   @ApiResponse({
     status: 200,
     description: 'Messages retrieved successfully.',
@@ -68,6 +71,7 @@ export class ChatController {
 
   // Get One-on-One Messages with a User (Paginated)
   @Get('users/:targetUserId/messages')
+  @Serialize(ResponseMessageDto)
   @ApiResponse({
     status: 200,
     description: 'Messages retrieved successfully.',

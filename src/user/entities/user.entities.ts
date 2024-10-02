@@ -12,6 +12,7 @@ import {
 } from 'typeorm';
 import { ChatMessage } from '../../chat/entities/chat.entity';
 import { ChatRoom } from '../../chat/entities/chat-room.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 @Index('user_username_unique', ['username'], { unique: true })
@@ -22,6 +23,7 @@ export class User {
   @Column()
   username: string;
 
+  @Exclude()
   @Column()
   password: string;
 

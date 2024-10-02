@@ -164,6 +164,7 @@ export class ChatService {
       relations: ['user'],
       skip: (page - 1) * limit,
       take: limit,
+      order: { createdAt: 'DESC' },
     });
 
     return { messages, total }; // You can also return total for pagination metadata
@@ -227,6 +228,7 @@ export class ChatService {
       relations: ['user'], // Include the user who sent the message
       skip: (page - 1) * limit,
       take: limit,
+      order: { createdAt: 'DESC' },
     });
 
     return { messages, total };

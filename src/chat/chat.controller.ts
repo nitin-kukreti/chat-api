@@ -21,7 +21,7 @@ import { ChatRoom } from './entities/chat-room.entity';
 import { PaginatedResponseDto } from 'src/common/dto/paginatedResponse.dto';
 import { SearchRoomDto } from './dto/search-room.dto';
 import { Serialize } from 'src/common/decorators/serialize.decorator';
-import { ResponseMessageDto } from './dto/Response.dto';
+import { ResponseChatRoomsDto, ResponseMessageDto } from './dto/Response.dto';
 
 @ApiTags('chat')
 @ApiSecurity('bearer')
@@ -54,7 +54,7 @@ export class ChatController {
   @ApiResponse({
     status: 200,
     description: 'Messages retrieved successfully.',
-    type: PaginatedResponseDto,
+    type: ResponseMessageDto,
   })
   @ApiResponse({ status: 404, description: 'Chat room not found.' })
   async getMessagesByRoomId(
@@ -75,14 +75,14 @@ export class ChatController {
   @ApiResponse({
     status: 200,
     description: 'Messages retrieved successfully.',
-    type: PaginatedResponseDto,
+    type: ResponseMessageDto,
   })
   @ApiResponse({ status: 404, description: 'User not found.' })
   async getMessagesWithUser(
     @Param('targetUserId', new ParseIntPipe()) targetUserId: number,
     @Request() req,
     @Query() { limit, page }: PaginationDto,
-  ): Promise<PaginatedResponseDto<ChatMessage>> {
+  ): Promise<ResponseMessageDto> {
     const loggedInUserId: number = req.user.userId;
     const { messages, total } = await this.chatService.getMessagesBetweenUsers(
       loggedInUserId,
@@ -99,7 +99,7 @@ export class ChatController {
   @ApiResponse({
     status: 200,
     description: 'Chat rooms retrieved successfully.',
-    type: PaginatedResponseDto,
+    type: ResponseChatRoomsDto,
   })
   async getChatRooms(
     @Request() req,
@@ -117,7 +117,7 @@ export class ChatController {
   @ApiResponse({
     status: 200,
     description: 'Chat rooms retrieved successfully.',
-    type: PaginatedResponseDto,
+    type: ResponseChatRoomsDto,
   })
   async getUserJoinedChatRooms(
     @Request() req,

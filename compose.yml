@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  postgres:
+    hostname: chat_db
+    container_name: chat_api_db
+    image: postgres:14-alpine
+    ports:
+      - '5432:5432'
+    volumes:
+      - ~/apps/postgres/chat-api:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=S3cret
+      - POSTGRES_USER=citizix_user
+      - POSTGRES_DB=chat_api
+    networks:
+      - chat_api_network
+
+  application:
+     container_name: chat_app
+     image: chatapi
+     ports:
+      - '3000:3000'
+     env_file: .env
+     networks:
+      - chat_api_network
+networks:
+  chat_api_network:
+    driver: bridge

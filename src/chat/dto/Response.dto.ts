@@ -2,7 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose, Type } from 'class-transformer';
 import { IsString, IsDate, IsNotEmpty } from 'class-validator';
 import { PaginatedResponseDto } from 'src/common/dto/paginatedResponse.dto';
-import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 export class ResponseUserDto {
   @ApiProperty({ example: 1 }) // Example user ID
